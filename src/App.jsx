@@ -5,6 +5,17 @@ import AboutUs from "./Pages/AboutUs.jsx";
 import SignUp from "./Pages/SignUp.jsx";
 import NotFound from "./Pages/NotFound.jsx";
 import Login from "./Pages/Login.jsx";
+import CourseList from "./Pages/Course/CourseList.jsx"
+import Contact from "./Pages/Contact.jsx";
+import Denied from "./Pages/Denied.jsx";
+import CourseDescription from "./Pages/Course/CourseDescription.jsx";
+import RequiredAuth from "./Components/Auth/RequiredAuth.jsx";
+import CreateCourse from "./Pages/CreateCourse.jsx";
+import Profile from "./Pages/User/Profile.jsx";
+import EditProfile from "./Pages/User/EditProfile.jsx";
+import Checkout from "./Pages/Payment/Checkout.jsx";
+import CheckoutSuccess from "./Pages/Course/CheckoutSuccess.jsx";
+import CheckoutFailure from "./Pages/Course/CheckoutFailure.jsx";
 
 const App = () => {
   return (
@@ -13,6 +24,20 @@ const App = () => {
       <Route path="/about" element={<AboutUs />}></Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/login" element={<Login />}></Route>
+      <Route path="/courses" element={<CourseList />}></Route>
+      <Route path="/course/description" element={<CourseDescription />}></Route>
+      <Route element={<RequiredAuth element={["ADMIN"]}/>}>
+      <Route path="/course/create" element={<CreateCourse/>}></Route>
+      </Route>
+      <Route element={<RequiredAuth element={["USER","ADMIN"]}/>}>
+      <Route path="/user/profile" element={<Profile/>}></Route>
+      <Route path="/user/editprofile" element={<EditProfile/>}></Route>
+      <Route path="/checkout" element={<Checkout/>}></Route>
+      <Route path="/checkout/success" element={<CheckoutSuccess/>}></Route>
+      <Route path="/checkout/fail" element={<CheckoutFailure/>}></Route>
+      </Route>
+      <Route path="/contact" element={<Contact />}></Route>
+      <Route path="/denied" element={<Denied />}></Route>
       <Route path="*" element={<NotFound />}></Route>
     </Routes>
   );

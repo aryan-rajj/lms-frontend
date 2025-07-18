@@ -2,8 +2,8 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { FiMenu } from "react-icons/fi";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-
 import Footer from "../Components/Footer.jsx";
+import { logout } from "../../Redux/AuthSlice.js";
 function HomeLayout({ children }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -13,11 +13,11 @@ function HomeLayout({ children }) {
 
   // for displaying the options acc to role
   const role = useSelector((state) => state?.auth?.role);
-  function handleLogout(e) {
+  async function handleLogout(e) {
     e.preventDefault();
 
-    // const res = await dispatch(logout());
-    // if(res?.payload?.success)More actions
+    const res = await dispatch(logout());
+    if(res?.payload?.success)
     navigate("/");
   }
   function changeWidth() {
@@ -93,7 +93,7 @@ function HomeLayout({ children }) {
                     <Link to="/user/profile">Profile</Link>
                   </button>
                   <button className="btn-secondary px-4 py-1 font-semibold rounded-md w-full">
-                    <Link onClick={handleLogout}>Logout</Link>
+                    <Link to='/logout' onClick={handleLogout}>Logout</Link>
                   </button>
                 </div>
               </li>
