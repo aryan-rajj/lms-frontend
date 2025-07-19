@@ -50,7 +50,7 @@ const Profile = () => {
           </div>
           <div className="flex items-center justify-center gap-2">
             <Link
-              to="/changepassword"
+              to="/change-password"
               className="w-1/2 bg-yellow-500 hover:bg-yellow-600 cursor-pointer transition-all ease-in-out duration-300 font-semibold py-2 rounded-sm text-center"
             >
               <button>Change Password</button>

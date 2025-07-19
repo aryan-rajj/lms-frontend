@@ -75,7 +75,7 @@ const CreateCourse = () => {
                 >
                     
                     <Link className="absolute top-8 text-2xl link text-accent cursor-pointer">
-                        <AiOutlineArrowLeft />
+                        <AiOutlineArrowLeft  onClick={()=>navigate(-1)}/>
                     </Link>
 
                     <h1 className="text-center text-2xl font-bold">
@@ -177,8 +177,6 @@ const CreateCourse = () => {
                     <button type="submit" className="w-full py-2 rounded-sm font-semibold text-lg cursor-pointer bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300">
                         Create Course
                     </button>
-
-
                 </form>
             </div>
         </HomeLayout>

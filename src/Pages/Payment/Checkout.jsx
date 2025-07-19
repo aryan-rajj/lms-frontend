@@ -9,6 +9,7 @@ import {
   verifyUserPayment,
 } from "../../../Redux/PaymentSlice";
 import { BiRupee } from "react-icons/bi";
+import { getUserData } from "../../../Redux/AuthSlice.js";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -26,23 +27,6 @@ const Checkout = () => {
     razorpay_subscription_id: "",
     razorpay_signature: "",
   };
-  //   const options = {
-  //     key: "YOUR_KEY_ID", // Replace with your Razorpay key_id
-  //     amount: "50000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-  //     currency: "INR",
-  //     name: "Acme Corp",
-  //     description: "Test Transaction",
-  //     order_id: "order_IluGWxBm9U8zJ8", // This is the order_id created in the backend
-  //     callback_url: "http://localhost:3000/payment-success", // Your success URL
-  //     prefill: {
-  //       name: "Gaurav Kumar",
-  //       email: "gaurav.kumar@example.com",
-  //       contact: "9999999999",
-  //     },
-  //     theme: {
-  //       color: "#F37254",
-  //     },
-  //   };
   async function handleSubscription(e) {
     e.preventDefault();
     if (!razorpayKey || !subscription_id) {
@@ -59,7 +43,6 @@ const Checkout = () => {
       theme: {
         color: "#F37254",
         // "#3399cc"
-        // "#F37254"
       },
       prefill: {
         name: userData?.fullName,
@@ -73,12 +56,16 @@ const Checkout = () => {
           response.razorpay_subscription_id;
         toast.success("Payment Successfull");
         const res = await dispatch(verifyUserPayment(paymentDetails));
-        res?.payload?.success
-          ? navigate("/checkout/success")
-          : navigate("/checkout/fail");
+        if (res?.payload?.success) {
+          await dispatch(getUserData());
+          toast.success("Subscription Activated!");
+          navigate("/checkout/success");
+        } else {
+          navigate("/checkout/fail");
+        }
       },
     };
-    const paymentObject =  new window.Razorpay(options);
+    const paymentObject = new window.Razorpay(options);
     paymentObject.open();
   }
   async function load() {
